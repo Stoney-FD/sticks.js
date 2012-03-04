@@ -21,27 +21,33 @@ How does it work?
 -----------------
 
 Add jQuery and sticks.js to the head of your web page. (Or whereever you prefer to load
-your scripts.)
+your scripts.) 
+ 
+Have your elements in a JSON 
+ 
+See index.html for examples. 
 
 
+Why re-invent the wheel? There are already a few templating engines out there
+-----------------------------------------------------------------------------
+While I really like ejs with Node.js and express.js, I recently stumbled upon a blog post 
+explaining the Nova templating engine (which is for node.js only), I really missed having 
+a template engine like that for the browser. 
+As much as I like Node.js, I don't always need or want a whole server for my websites.
 
-Why re-invent the wheel? There are already a few templating engines out there...
---------------------------------------------------------------------------------
-While I really like ejs with Node.js and express.js, I recently stumbled upon a blog post
-explaining the Nova templating engine (which is for node.js only), I really missed having
-a template engine like that for the browser.
-As much as I like Node.js, I don't always need or want 
+
+What is to 
 
 
 License?
 --------
 
 MIT-licensed as usual. Use it however you want, no attribution necessary, but appreciated. 
-For information check LICENSE.txt
-
+For information check LICENSE.txt 
 
 Who are you?
 ------------
 
-Hey guys, my name is Johannes Stein.
+Hey guys, my name is Johannes Stein. I'm a game and web developer.
+E-Mail: johannesstein@freeze-dev.com 
 Twitter: @Stoney_FD
