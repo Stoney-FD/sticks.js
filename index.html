@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>Sticks.js (Templating engine)</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Johannes Stein" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+		<script src="js/sticks.js" type="text/javascript"></script>
+		<script>
+			var divpart = {
+				"div": {
+					"attr": {
+						"id": "myDiv",
+						"class": "myDivClass"
+					},
+					"content": {
+						"div": {
+							"h1": "{{header}}",
+							"hr": "",
+							"br": "",
+							"span": {
+								"attr": {
+									"id": "text",
+									"style": "{{mystyle}}"
+								},
+								"content": "Something awesome!"
+							}
+						}
+					}
+				}
+			};
+
+			var formatter = {
+				"header": "My awesome Headline",
+				"mystyle": "background-color: #000; color: #ff0;"
+			}
+
+			$(document).ready(function() {
+				sticks.template(divpart, formatter, "#main");
+			});
+
+		</script>
+	</head>
+	<body>
+		<div>
+			<header>
+				<h1>Sticks.js (Templating engine)</h1>
+			</header>
+			<div id="main"></div>
+			<footer>
+				<p>
+					&copy; Copyright  by Johannes Stein
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>
