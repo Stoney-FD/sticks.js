@@ -7,40 +7,128 @@
 		<meta name="description" content="" />
 		<meta name="author" content="Johannes Stein" />
 		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		
+		<link type="text/css" rel="stylesheet" href="styles/normalize.css"/>
+		<link type="text/css" rel="stylesheet" href="styles/shCoreDefault.css"/>
+		
+		<link type="text/less" rel="stylesheet" href="styles/main.less"/>
+		
+		<script type="text/javascript" src="js/libs/less-1.2.2.min.js"></script>
+		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+		
+		<script type="text/javascript" src="js/libs/shCore.js"></script>
+		<script type="text/javascript" src="js/libs/shBrushJScript.js"></script>
+		<script type="text/javascript" src="js/libs/shBrushXml.js"></script>
+		<script type="text/javascript">SyntaxHighlighter.all();</script>   
+		
 		<script src="js/sticks.js" type="text/javascript"></script>
+		
 		<script>
-			var divpart = {
-				"div": {
-					"attr": {
-						"id": "myDiv",
-						"class": "myDivClass"
-					},
-					"content": {
-						"div": {
-							"h1": "{{header}}",
-							"hr": "",
-							"br": "",
-							"span": {
-								"attr": {
-									"id": "text",
-									"style": "{{mystyle}}"
-								},
-								"content": "Something awesome!"
+			// http://stackoverflow.com/questions/1787322/htmlspecialchars-equivalent-in-javascript
+			function escapeHtml(unsafe) {
+				return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+			}
+
+			function resetSticksTemplate() {
+				sticks.options.blockName.content = "content";
+				sticks.options.blockName.attr = "attr";
+				
+				sticks.options.parse.start = "{{";
+				sticks.options.parse.end = "}}";
+			}
+
+			// Simple example which creates a div with a span
+			function example1() {
+				resetSticksTemplate();
+			}
+
+			// Creates a div with some sub-elements and uses Moustache-like templating
+			function example2() {
+				resetSticksTemplate();
+
+				var divpart = {
+					"div": {
+						"attr": {
+							"id": "myDiv",
+							"class": "myDivClass"
+						},
+						"content": {
+							"div": {
+								"h1": "{{header}}",
+								"hr": "",
+								"br": "",
+								"span": {
+									"attr": {
+										"id": "text",
+										"style": "{{mystyle}}"
+									},
+									"content": "Something awesome!"
+								}
 							}
 						}
 					}
-				}
-			};
+				};
 
-			var formatter = {
-				"header": "My awesome Headline",
-				"mystyle": "background-color: #000; color: #ff0;"
+				var formatter = {
+					"header": "My awesome Headline",
+					"mystyle": "background-color: #000; color: #ff0;"
+				}
+
+				sticks.template(divpart, formatter, "#main");
 			}
 
+			//
+			function example3() {
+				sticks.options.blockName.content = "child";
+				sticks.options.blockName.attr = "tag";
+				
+				sticks.options.parse.start = "<%=";
+				sticks.options.parse.end = "%>";
+
+			}
+
+			function example4() {
+				resetSticksTemplate();
+
+			}
+
+			// Converts a JSON object into XML (no HTML)
+			function example5() {
+				resetSticksTemplate();
+				
+				var customers = {
+					"customer1": {
+						"name": "Max Power",
+						"street": "Baker St. 22",
+						"city": "Springfield"
+					},
+					"customer2": {
+						"attr": {
+							"vip": "true"
+						},
+						"content": {
+							"name": "Uh oh, someone important",
+							"street": "Very important street",
+							"city": "Top secret"
+						}
+					},
+					"customer3": {
+						"name": "Anyone else",
+						"street": "Some other made up street",
+						"city": "New York"
+					}
+				};
+
+				$('#source').append("Original JSON object: <pre class='brush: js;'>" + JSON.stringify(customers) + "</pre>");
+				$('#source').append('<br /><br />');
+				$('#source').append("Converted XML object <pre class='brush: xml;'>" + escapeHtml(sticks.convert(customers)) + "</pre>");
+			}
+
+
 			$(document).ready(function() {
-				sticks.template(divpart, formatter, "#main");
+				example5();
 			});
 
 		</script>
@@ -49,8 +137,44 @@
 		<div>
 			<header>
 				<h1>Sticks.js (Templating engine)</h1>
+				<div id="github">Fork me on Github</div>
 			</header>
-			<div id="main"></div>
+			<div id="chooser">
+				<div class="button">
+					<span class="title">Example 1</span>
+					<span class="description">Simple example</span>
+				</div>
+				<div class="button">
+					<span class="title">Example 2</span>
+					<span class="description">Moustache-like templating</span>
+				</div>
+				<div class="button">
+					<span class="title">Example 3</span>
+					<span class="description">Custom templating</span>
+				</div>
+				<div class="button">
+					<span class="title">Example 4</span>
+					<span class="description">Load JSON from file</span>
+				</div>
+				<div class="button">
+					<span class="title">Example 5</span>
+					<span class="description">JSON to XML</span>
+				</div>
+			</div>
+			<div>
+				<div class="source container">
+					<span>Hide Source</span>
+					<div id="source">
+						
+					</div>
+				</div>
+				<div class="main container">
+					<span>Output</span>
+					<div id="main">
+						
+					</div>
+				</div>
+			</div>
 			<footer>
 				<p>
 					&copy; Copyright  by Johannes Stein

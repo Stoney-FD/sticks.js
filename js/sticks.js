@@ -27,6 +27,7 @@
  *	THE SOFTWARE.
  *
  */
+
 sticks = {
 	// Options as JSON object
 	"options": {
@@ -73,27 +74,34 @@ sticks = {
 			if(key === sticks.options.blockName.content)
 				return value;
 
-			var attrString = '',
-				convertedKey = '',
-				formattedConvertedKey = '';
+			var attrString = '', convertedKey = '', formattedConvertedKey = '';
 
 			// Append attributes if any
 			if(attr) {
 				$.each(attr, function(attrKey, attrValue) {
-					attrString += [' ', attrKey, '="', attrValue, '"'].join('');
+					attrString += (' ' + attrKey + '="' + attrValue + '"');
 				});
+
 			}
-			
+
 			// Convert key
-			convertedKey = (value) ? ['<', key, attrString, '>', value, '</', key, '>'].join('') : ['<', key, ' />'].join('');
+			convertedKey = (value) ? ('<' + key + attrString + '>' + value + '</' + key + '>') : ('<' + key + ' />');
 			formattedConvertedKey = convertedKey;
-			
+
 			// Format if data has been specified
 			// Format as long as every data
 			if(data) {
 				$.each(data, function(dataKey, dataValue) {
-					var regexp = new RegExp(['\\', sticks.options.parse.start, dataKey, '\\', sticks.options.parse.end].join(''), 'gi');
-					formattedConvertedKey = formattedConvertedKey.replace(regexp, dataValue);
+					if( typeof dataKey === "object") {
+						$.each(dataKey, function(dataSubKey, dataSubValue) {
+						  
+						});
+						
+						
+					} else {
+						var regexp = new RegExp('\\' + sticks.options.parse.start + dataKey + '\\' + sticks.options.parse.end, 'gi');
+						formattedConvertedKey = formattedConvertedKey.replace(regexp, dataValue);
+					}
 				});
 
 			}
@@ -104,6 +112,8 @@ sticks = {
 		result = "";
 
 		$.each(view, function(key, value) {
+			console.log(key);
+			
 			if( typeof value === 'object') {
 				result += (value[sticks.options.blockName.attr]) ? keyToXML(key, sticks.convert(value), value[sticks.options.blockName.attr]) : keyToXML(key, sticks.convert(value));
 			} else {
@@ -122,14 +132,20 @@ sticks = {
 	 *
 	 * @return {String}
 	 */
-	template: function(view, data, sel) {
-		if(view) {
-
+	template: function(view, data, sel, append) {
+		if(!view) {
+			return;
+		} else {
+			
 		}
 
 		if(sel)
-			$(sel).html(sticks.convert(view, data));
-		else
+		{
+			if ((append) && (append === true))
+				$(sel).append(sticks.convert(view, data));
+			else
+				$(sel).html(sticks.convert(view, data));
+		} else
 			return sticks.convert(view, data);
 	}
 
