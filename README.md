@@ -48,9 +48,3 @@ License?
 --------
 MIT-licensed as usual. Use it however you want, no attribution necessary, but appreciated. 
 For information check LICENSE.txt 
- 
- 
-Who are you? Where can I find you?
-----------------------------------
-E-Mail: <johannesstein@freeze-dev.com> 
-Twitter: [http://twitter.com/Stoney_FD](@Stoney_FD)
